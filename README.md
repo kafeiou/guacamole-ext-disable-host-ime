@@ -6,6 +6,10 @@ A lightweight, frontend-only [Apache Guacamole](https://guacamole.apache.org/) e
 
 No custom Docker image build or Maven/JDK setup is required—just mount the packaged `.jar` file into the official `guacamole/guacamole` Docker image.
 
+## Compatibility
+
+Tested and verified on Apache Guacamole **1.5.5** and **1.6.0**.
+
 ## How It Works
 
 By default, Guacamole creates a hidden `<textarea>` (`Guacamole.InputSink`) and automatically focuses it on every keystroke so local IMEs and mobile virtual keyboards can compose text. Because focus stays inside an editable `<textarea>`, Windows keeps the host IME active, causing `Shift` and typing keys to toggle or pop up the host IME.

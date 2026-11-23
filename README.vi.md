@@ -6,6 +6,10 @@
 
 Không cần tự build lại Docker image hay cài đặt Maven / JDK—chỉ cần mount tệp `.jar` đã đóng gói vào Docker image chính thức `guacamole/guacamole`.
 
+## Khả năng tương thích
+
+Đã kiểm thử thành công trên Apache Guacamole **1.5.5** và **1.6.0**.
+
 ## Cách hoạt động
 
 Mặc định, Guacamole tạo một thẻ `<textarea>` ẩn (`Guacamole.InputSink`) và tự động focus vào đó mỗi khi bạn nhấn phím để hỗ trợ bộ gõ cục bộ và bàn phím ảo trên di động. Vì focus nằm trong một `<textarea>` có thể chỉnh sửa, Windows giữ cho IME cục bộ ở trạng thái hoạt động, khiến việc nhấn `Shift` làm chuyển đổi bộ gõ trên máy chủ cục bộ.

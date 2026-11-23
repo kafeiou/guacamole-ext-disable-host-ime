@@ -6,6 +6,10 @@
 
 Docker イメージの再ビルドや Maven / JDK のインストールは不要です。パッケージ化した `.jar` を公式の `guacamole/guacamole` Docker イメージにマウントするだけで動作します。
 
+## 動作確認済みバージョン
+
+Apache Guacamole **1.5.5** および **1.6.0** にて動作確認済みです。
+
 ## 仕組み
 
 デフォルトでは、Guacamole は非表示の `<textarea>`（`Guacamole.InputSink`）を作成し、キー入力のたびに自動でフォーカスを戻します。フォーカスが編集可能な `<textarea>` にあるため、Windows のホスト側 IME が有効になり、`Shift` キーなどでホスト側の入力モードが切り替わってしまいます。

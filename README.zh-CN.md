@@ -6,6 +6,10 @@
 
 无需重新编译 Docker 镜像，也无需安装 Maven 或 JDK，只需将打包好的 `.jar` 挂载到官方原版 `guacamole/guacamole` 容器即可。
 
+## 兼容性
+
+已在 Apache Guacamole **1.5.5**、**1.6.0** 测试通过。
+
 ## 工作原理
 
 Guacamole 默认会创建一个隐藏的 `<textarea>`（`Guacamole.InputSink`），并在每次按键时自动将焦点拉回该输入框，以支持本地输入法和移动设备虚拟键盘。由于焦点停留在可编辑的 `<textarea>` 上，Windows 会使宿主机 IME 保持激活状态，导致按 `Shift` 时切换宿主机中/英文输入法。
