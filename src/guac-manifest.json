@@ -1,0 +1,8 @@
+{
+    "guacamoleVersion": "*",
+    "name": "Disable Host IME",
+    "namespace": "disable-host-ime",
+    "js": [
+        "disable-host-ime.js"
+    ]
+}
