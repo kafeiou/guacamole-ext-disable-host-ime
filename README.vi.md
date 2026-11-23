@@ -14,6 +14,7 @@ Tiện ích mở rộng này sẽ:
 1. Ghi đè `Guacamole.InputSink` trước khi Guacamole khởi tạo, thay thế `<textarea>` ẩn bằng một thẻ `<div>` không thể chỉnh sửa.
 2. Giữ nguyên `Guacamole.Keyboard` lắng nghe sự kiện `keydown` / `keyup` gốc trên `document` và gửi thẳng tới máy Windows/Linux từ xa.
 3. Giữ cho mọi ô nhập liệu hiển thị (**trang đăng nhập**, **clipboard ở thanh bên**, **biểu mẫu cài đặt**) hoạt động bình thường với bộ gõ cục bộ, đồng thời tự động bỏ focus khi bạn nhấp lại vào màn hình từ xa hoặc đóng thanh bên.
+4. Tự động bỏ qua việc ghi đè `Guacamole.InputSink` trên các thiết bị di động/máy tính bảng chỉ dùng cảm ứng (`(pointer: coarse) and (hover: none)`), giúp bàn phím ảo mặc định vẫn hoạt động bình thường.
 
 ## Đóng gói (Build)
 
@@ -69,4 +70,4 @@ Extension "Disable Host IME" loaded.
 
 - **Chỉ dùng bộ gõ của máy từ xa khi điều khiển màn hình:** Vì bộ gõ cục bộ bị tắt trên màn hình từ xa, bạn cần sử dụng bộ gõ được cài trên máy Windows/Linux từ xa.
 - **Phím tắt toàn cục của hệ điều hành:** Các phím tắt hệ thống như `Win + Space` (chuyển đổi bố cục bàn phím trên Windows) bị hệ điều hành xử lý trước khi tới trình duyệt nên tiện ích web không thể chặn.
-- **Bàn phím ảo trên di động:** Việc tắt `InputSink` sẽ khiến trình duyệt trên điện thoại/máy tính bảng không tự động mở bàn phím ảo.
+- **Thiết bị di động/máy tính bảng chỉ dùng cảm ứng:** Tiện ích tự động bỏ qua trên các thiết bị chỉ dùng cảm ứng (`(pointer: coarse) and (hover: none)`) để giữ nguyên bàn phím ảo mặc định; tính năng tắt IME máy chủ chỉ áp dụng cho trình duyệt máy tính có chuột/touchpad.

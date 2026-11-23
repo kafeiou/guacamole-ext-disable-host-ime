@@ -14,6 +14,18 @@
         return;
     }
 
+    // Skip overriding InputSink on touch-only mobile/tablet devices so their
+    // on-screen virtual keyboards continue to work normally.
+    if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
+        try {
+            if (window.matchMedia('(pointer: coarse) and (hover: none)').matches) {
+                return;
+            }
+        } catch (e) {
+            // Ignore matchMedia errors in restricted environments
+        }
+    }
+
     /**
      * Checks whether the given element is an editable form control or
      * contenteditable element.

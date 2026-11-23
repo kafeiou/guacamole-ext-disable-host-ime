@@ -14,6 +14,7 @@ This extension:
 1. Overrides `Guacamole.InputSink` before Guacamole initializes, replacing the hidden `<textarea>` with a non-editable placeholder `<div>`.
 2. Lets `Guacamole.Keyboard` continue sending raw `keydown` / `keyup` events directly to the remote Windows/Linux machine.
 3. Keeps all visible inputs (**login screen**, **sidebar clipboard**, **settings forms**) working normally with your host IME, and automatically blurs them when you click back onto the remote desktop or close the sidebar.
+4. Automatically skips overriding `Guacamole.InputSink` on touch-only mobile/tablet devices (`(pointer: coarse) and (hover: none)`), so on-screen virtual keyboards continue to work normally.
 
 ## Build
 
@@ -69,4 +70,4 @@ Extension "Disable Host IME" loaded.
 
 - **Remote IME only during desktop control:** Because host IME composition is disabled on the remote display, you must use the input method installed on the remote Windows/Linux machine.
 - **OS-level global hotkeys:** System-wide shortcuts such as `Win + Space` (Windows keyboard layout switch) are intercepted by the host OS before reaching the browser and cannot be blocked by a web extension.
-- **Mobile virtual keyboards:** Disabling `InputSink` prevents mobile browsers from automatically opening the on-screen keyboard.
+- **Touch-only mobile/tablet devices:** The extension automatically bypasses itself on touch-only devices (`(pointer: coarse) and (hover: none)`) to preserve the native on-screen virtual keyboard, meaning host IME blocking only applies to desktop/laptop browsers with a fine pointer.

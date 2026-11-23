@@ -14,6 +14,7 @@ Guacamole 預設會建立一個隱藏的 `<textarea>`（`Guacamole.InputSink`）
 1. 在 Guacamole 啟動前覆寫 `Guacamole.InputSink`，將隱藏 `<textarea>` 替換為不可編輯的 `<div>`。
 2. 保留 `Guacamole.Keyboard` 對 `document` 的監聽，直接將原始 `keydown` / `keyup` 按鍵傳送至遠端 Windows/Linux 主機。
 3. 完整保留可見輸入框（**登入畫面**、**側邊欄剪貼簿**、**設定表單**）的正常輸入功能；當你點回遠端桌面畫面或關閉側邊欄時，自動解除輸入框焦點，讓宿主機 IME 立即停用。
+4. 在純觸控行動裝置／平板（`(pointer: coarse) and (hover: none)`）上會自動略過覆寫，保留手機與平板原生的虛擬鍵盤功能。
 
 ## 打包方式
 
@@ -69,4 +70,4 @@ Extension "Disable Host IME" loaded.
 
 - **遠端操作時僅能使用遠端輸入法**：遠端畫面不再接受宿主機 IME 組字，請切換使用遠端 Windows/Linux 內的輸入法。
 - **作業系統全域熱鍵**：例如 Windows 的 `Win + Space`（切換系統語系鍵盤配置）屬於作業系統最底層攔截，網頁擴充套件無法阻擋。
-- **行動裝置虛擬鍵盤**：停用 `InputSink` 後，手機或平板瀏覽器將無法自動彈出虛擬鍵盤。
+- **純觸控手機／平板裝置**：為保留原生螢幕虛擬鍵盤，外掛在偵測到純觸控裝置（`(pointer: coarse) and (hover: none)`）時會自動略過停用邏輯，宿主機 IME 停用僅套用於具備滑鼠／觸控板的桌機與筆電瀏覽器。
