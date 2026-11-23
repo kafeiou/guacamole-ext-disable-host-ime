@@ -34,13 +34,15 @@ chmod +x build.sh
 
 ## 部署方式（搭配官方 Docker Image）
 
-將 `.jar` 掛載到 `guacamole/guacamole` 容器內的 `/etc/guacamole/extensions/` 目錄並重啟容器即可。
+設定環境變數 `GUACAMOLE_HOME=/etc/guacamole`，並將 `.jar` 掛載到 `guacamole/guacamole` 容器內的 `/etc/guacamole/extensions/` 目錄，再重建容器即可。
 
 ### Docker Compose
 ```yaml
 services:
   guacamole:
     image: guacamole/guacamole:latest
+    environment:
+      - GUACAMOLE_HOME=/etc/guacamole
     volumes:
       - ./dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro
 ```
@@ -48,10 +50,13 @@ services:
 ### Docker Run
 ```bash
 docker run --name guacamole \
+  -e GUACAMOLE_HOME=/etc/guacamole \
   -v "$(pwd)/dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro" \
   -p 8080:8080 \
   guacamole/guacamole:latest
 ```
+
+> **注意：** 請勿直接將 `.jar` 掛載或複製到 `/home/guacamole/.guacamole/extensions/`。官方 `guacamole/guacamole` 映像檔每次啟動都會先清空 `/home/guacamole/.guacamole`，再從 `GUACAMOLE_HOME`（`/etc/guacamole`）複製外掛。
 
 重啟後可用 `docker logs guacamole` 確認已成功載入：
 ```text

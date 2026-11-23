@@ -34,13 +34,15 @@ Tệp đầu ra sẽ được tạo tại `dist/guacamole-disable-host-ime.jar`.
 
 ## Triển khai (với Docker Image chính thức)
 
-Mount tệp `.jar` vào thư mục `/etc/guacamole/extensions/` trong container `guacamole/guacamole` và khởi động lại container.
+Đặt biến môi trường `GUACAMOLE_HOME=/etc/guacamole`, mount tệp `.jar` vào thư mục `/etc/guacamole/extensions/` trong container `guacamole/guacamole`, sau đó tạo lại container.
 
 ### Docker Compose
 ```yaml
 services:
   guacamole:
     image: guacamole/guacamole:latest
+    environment:
+      - GUACAMOLE_HOME=/etc/guacamole
     volumes:
       - ./dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro
 ```
@@ -48,10 +50,13 @@ services:
 ### Docker Run
 ```bash
 docker run --name guacamole \
+  -e GUACAMOLE_HOME=/etc/guacamole \
   -v "$(pwd)/dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro" \
   -p 8080:8080 \
   guacamole/guacamole:latest
 ```
+
+> **Quan trọng:** **Không** mount hoặc sao chép tệp `.jar` trực tiếp vào `/home/guacamole/.guacamole/extensions/`. Mỗi lần khởi động, image chính thức `guacamole/guacamole` sẽ xóa sạch `/home/guacamole/.guacamole` và sao chép tiện ích từ `GUACAMOLE_HOME` (`/etc/guacamole`).
 
 Sau khi khởi động lại, kiểm tra log (`docker logs guacamole`) để xác nhận tiện ích đã được tải:
 ```text

@@ -34,13 +34,15 @@ chmod +x build.sh
 
 ## デプロイ方法（公式 Docker イメージ）
 
-`.jar` ファイルを `guacamole/guacamole` コンテナの `/etc/guacamole/extensions/` にマウントして再起動してください。
+環境変数 `GUACAMOLE_HOME=/etc/guacamole` を設定し、`.jar` ファイルを `guacamole/guacamole` コンテナの `/etc/guacamole/extensions/` にマウントしてコンテナを再作成してください。
 
 ### Docker Compose
 ```yaml
 services:
   guacamole:
     image: guacamole/guacamole:latest
+    environment:
+      - GUACAMOLE_HOME=/etc/guacamole
     volumes:
       - ./dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro
 ```
@@ -48,10 +50,13 @@ services:
 ### Docker Run
 ```bash
 docker run --name guacamole \
+  -e GUACAMOLE_HOME=/etc/guacamole \
   -v "$(pwd)/dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro" \
   -p 8080:8080 \
   guacamole/guacamole:latest
 ```
+
+> **重要：** `.jar` ファイルを `/home/guacamole/.guacamole/extensions/` へ直接マウントまたはコピーしないでください。公式 `guacamole/guacamole` イメージは起動時に `/home/guacamole/.guacamole` を一度削除・再作成し、`GUACAMOLE_HOME`（`/etc/guacamole`）から拡張機能をコピーします。
 
 再起動後、`docker logs guacamole` で拡張機能が読み込まれたことを確認できます：
 ```text

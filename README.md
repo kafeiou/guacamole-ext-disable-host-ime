@@ -34,13 +34,15 @@ The output file will be generated at `dist/guacamole-disable-host-ime.jar`.
 
 ## Deployment (Official Docker Image)
 
-Mount the `.jar` file into `/etc/guacamole/extensions/` in your `guacamole/guacamole` container and restart it.
+Set `GUACAMOLE_HOME=/etc/guacamole`, mount the `.jar` file into `/etc/guacamole/extensions/` in your `guacamole/guacamole` container, and recreate the container.
 
 ### Docker Compose
 ```yaml
 services:
   guacamole:
     image: guacamole/guacamole:latest
+    environment:
+      - GUACAMOLE_HOME=/etc/guacamole
     volumes:
       - ./dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro
 ```
@@ -48,10 +50,13 @@ services:
 ### Docker Run
 ```bash
 docker run --name guacamole \
+  -e GUACAMOLE_HOME=/etc/guacamole \
   -v "$(pwd)/dist/guacamole-disable-host-ime.jar:/etc/guacamole/extensions/guacamole-disable-host-ime.jar:ro" \
   -p 8080:8080 \
   guacamole/guacamole:latest
 ```
+
+> **Important:** Do **not** mount or copy the `.jar` directly into `/home/guacamole/.guacamole/extensions/`. On every startup, the official `guacamole/guacamole` image clears `/home/guacamole/.guacamole` and copies extensions from `GUACAMOLE_HOME` (`/etc/guacamole`).
 
 After restarting, verify in container logs (`docker logs guacamole`) that the extension loaded:
 ```text
